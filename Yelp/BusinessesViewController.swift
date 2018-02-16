@@ -13,6 +13,10 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     var businesses: [Business]!
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var searchBar: UISearchBar!
+    @IBOutlet var searchController: UISearchController!
+    
+    var typeOfFood: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,8 +24,27 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
+//        searchBar.delegate = self
+//
+//        searchBar.returnKeyType = UIReturnKeyType.done
         
-        Business.searchWithTerm(term: "Thai", completion: { (businesses: [Business]?, error: Error?) -> Void in
+        searchBar = UISearchBar()
+        searchBar.sizeToFit()
+        navigationItem.titleView = searchBar
+        searchDisplayController?.displaysSearchBarInNavigationBar = true
+        print(searchBar.text)
+        if(typeOfFood == nil) {
+            typeOfFood = "Mexican"
+        }
+        /*
+        //using search controller
+        searchController.searchBar.sizeToFit()
+        navigationItem.titleView = searchController.searchBar
+        searchController.hidesNavigationBarDuringPresentation = false
+ */
+        
+        //searchController.hidesNavigationBarDuringPresentation = false
+        Business.searchWithTerm(term: typeOfFood, completion: { (businesses: [Business]?, error: Error?) -> Void in
             
             self.businesses = businesses
             self.tableView.reloadData()
@@ -75,5 +98,15 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
      // Pass the selected object to the new view controller.
      }
      */
+    
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        if(searchBar.text == nil || searchBar.text == "") {
+//            view.endEditing(true)
+//            tableView.reloadData()
+//        } else {
+//            typeOfFood = searchBar.text
+//            tableView.reloadData()
+//        }
+//    }
     
 }
